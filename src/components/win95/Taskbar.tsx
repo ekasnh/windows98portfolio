@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useWindows } from '@/contexts/WindowContext';
 import { StartMenu } from './StartMenu';
 
-export const Taskbar: React.FC = () => {
+interface TaskbarProps {
+  onLock: () => void;
+}
+
+export const Taskbar: React.FC<TaskbarProps> = ({ onLock }) => {
   const { windows, activeWindowId, restoreWindow, focusWindow, minimizeWindow } = useWindows();
   const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
   const [time, setTime] = useState(new Date());
@@ -43,46 +47,50 @@ export const Taskbar: React.FC = () => {
   return (
     <>
       <div 
-        className="fixed bottom-0 left-0 right-0 h-10 bg-secondary win95-border-outset flex items-center px-1 gap-1"
+        className="fixed bottom-0 left-0 right-0 h-10 bg-[#c0c0c0] win95-border-outset flex items-center px-1 gap-1"
         style={{ zIndex: 9998 }}
       >
         {/* Start Button */}
         <div className="start-menu-container relative">
           <button
-            className={`win95-button flex items-center gap-1 h-8 font-bold ${isStartMenuOpen ? 'win95-border-inset' : ''}`}
+            className={`win95-button flex items-center gap-1 h-7 font-bold ${isStartMenuOpen ? 'win95-border-inset' : ''}`}
             onClick={(e) => {
               e.stopPropagation();
               setIsStartMenuOpen(!isStartMenuOpen);
             }}
           >
-            <span className="text-lg">🪟</span>
-            <span className="font-win95">Start</span>
+            <span className="text-base">🪟</span>
+            <span className="text-sm font-bold">Start</span>
           </button>
-          <StartMenu isOpen={isStartMenuOpen} onClose={() => setIsStartMenuOpen(false)} />
+          <StartMenu 
+            isOpen={isStartMenuOpen} 
+            onClose={() => setIsStartMenuOpen(false)} 
+            onLock={onLock}
+          />
         </div>
 
         {/* Divider */}
-        <div className="w-px h-6 bg-muted mx-1" />
+        <div className="w-px h-6 bg-[#808080] mx-1" />
 
         {/* Task buttons */}
         <div className="flex-1 flex gap-1 overflow-hidden">
           {windows.filter(w => w.isOpen).map(window => (
             <button
               key={window.id}
-              className={`win95-button h-8 px-2 flex items-center gap-1 max-w-[150px] truncate ${
+              className={`win95-button h-7 px-2 flex items-center gap-1 max-w-[140px] truncate text-left ${
                 activeWindowId === window.id && !window.isMinimized ? 'win95-border-inset' : ''
               }`}
               onClick={() => handleTaskbarButtonClick(window.id)}
               title={window.title}
             >
-              <span className="truncate text-sm font-win95">{window.title}</span>
+              <span className="truncate text-xs">{window.title}</span>
             </button>
           ))}
         </div>
 
         {/* System Tray */}
-        <div className="win95-border-inset px-2 h-7 flex items-center gap-2">
-          <span className="text-sm font-win95">
+        <div className="win95-border-inset px-2 h-6 flex items-center gap-2 bg-[#c0c0c0]">
+          <span className="text-xs">
             {time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
           </span>
         </div>
