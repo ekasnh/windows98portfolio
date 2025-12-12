@@ -11,15 +11,18 @@ import {
   ChevronRight,
   GraduationCap,
   Pencil,
-  Image
+  Image,
+  Lock,
+  Power
 } from 'lucide-react';
 
 interface StartMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  onLock: () => void;
 }
 
-export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose }) => {
+export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose, onLock }) => {
   const { openWindow } = useWindows();
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
 
@@ -42,6 +45,11 @@ export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose }) => {
 
   const handleExternalLink = (url: string) => {
     window.open(url, '_blank');
+    onClose();
+  };
+
+  const handleLock = () => {
+    onLock();
     onClose();
   };
 
@@ -200,6 +208,17 @@ export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose }) => {
           >
             <GraduationCap size={18} />
             <span className="text-sm">Google Scholar</span>
+          </div>
+
+          <div className="h-px bg-[#808080] mx-1 my-1" />
+
+          {/* Lock */}
+          <div 
+            className="win95-start-item"
+            onClick={handleLock}
+          >
+            <Lock size={18} />
+            <span className="text-sm">Lock</span>
           </div>
         </div>
       </div>
