@@ -72,25 +72,41 @@ button, a, [role="button"] {
   }
 
   .dark {
-    --background: 0 0% 75%;
-    --foreground: 0 0% 0%;
-    --card: 0 0% 75%;
-    --card-foreground: 0 0% 0%;
-    --popover: 0 0% 75%;
-    --popover-foreground: 0 0% 0%;
-    --primary: 240 100% 25%;
+    /* Dark Windows 95 Theme */
+    --background: 220 15% 15%;
+    --foreground: 0 0% 90%;
+    --card: 220 15% 20%;
+    --card-foreground: 0 0% 90%;
+    --popover: 220 15% 20%;
+    --popover-foreground: 0 0% 90%;
+    --primary: 220 80% 40%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 75%;
-    --secondary-foreground: 0 0% 0%;
-    --muted: 0 0% 50%;
-    --muted-foreground: 0 0% 100%;
-    --accent: 180 100% 25%;
+    --secondary: 220 15% 25%;
+    --secondary-foreground: 0 0% 90%;
+    --muted: 220 15% 35%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 180 60% 40%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
+    --destructive: 0 84% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 50%;
-    --input: 0 0% 100%;
-    --ring: 240 100% 25%;
+    
+    /* Dark Windows 95 specific */
+    --win95-gray: 220 15% 25%;
+    --win95-dark-gray: 220 15% 15%;
+    --win95-light-gray: 220 15% 35%;
+    --win95-white: 0 0% 90%;
+    --win95-black: 0 0% 0%;
+    --win95-blue: 220 80% 40%;
+    --win95-teal: 180 60% 40%;
+    
+    /* Dark 3D Border Colors */
+    --border-light: 220 15% 40%;
+    --border-dark: 220 15% 10%;
+    --border-medium: 220 15% 25%;
+    
+    --border: 220 15% 30%;
+    --input: 220 15% 20%;
+    --ring: 220 80% 50%;
   }
 }
 
@@ -125,6 +141,7 @@ button, a, [role="button"] {
   font-size: 16px;
   cursor: pointer;
   min-width: 75px;
+  color: hsl(var(--foreground));
 }
 
 .win95-button:active {

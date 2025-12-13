@@ -7,9 +7,11 @@ interface TaskbarProps {
   onLock: () => void;
   onShutdown: () => void;
   onShowError: (message: string) => void;
+  isDarkMode: boolean;
+  onToggleDarkMode: () => void;
 }
 
-export const Taskbar: React.FC<TaskbarProps> = ({ onLock, onShutdown, onShowError }) => {
+export const Taskbar: React.FC<TaskbarProps> = ({ onLock, onShutdown, onShowError, isDarkMode, onToggleDarkMode }) => {
   const { windows, activeWindowId, restoreWindow, focusWindow, minimizeWindow } = useWindows();
   const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
   const [time, setTime] = useState(new Date());
@@ -70,6 +72,8 @@ export const Taskbar: React.FC<TaskbarProps> = ({ onLock, onShutdown, onShowErro
             onClose={() => setIsStartMenuOpen(false)} 
             onLock={onLock}
             onShutdown={onShutdown}
+            isDarkMode={isDarkMode}
+            onToggleDarkMode={onToggleDarkMode}
           />
         </div>
 

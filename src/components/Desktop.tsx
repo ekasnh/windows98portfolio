@@ -18,12 +18,15 @@ import { CalculatorWindow } from './windows/CalculatorWindow';
 import { YouTubeWindow } from './windows/YouTubeWindow';
 import { FileExplorerWindow } from './windows/FileExplorerWindow';
 import { MusicPlayerWindow } from './windows/MusicPlayerWindow';
+import { RecycleBinWindow } from './windows/RecycleBinWindow';
+import { CommandPromptWindow } from './windows/CommandPromptWindow';
+import { InternetExplorerWindow } from './windows/InternetExplorerWindow';
 import { MinesweeperGame } from './games/MinesweeperGame';
 import { TetrisGame } from './games/TetrisGame';
 import { SolitaireGame } from './games/SolitaireGame';
 import { PongGame } from './games/PongGame';
 import { ChessGame } from './games/ChessGame';
-import { User, Mail, FileText, Monitor, Folder, Music } from 'lucide-react';
+import { User, Mail, FileText, Monitor, Folder, Music, Trash2, Terminal, Globe } from 'lucide-react';
 
 export const Desktop: React.FC = () => {
   const { openWindow, wallpaper, windows } = useWindows();
@@ -31,6 +34,12 @@ export const Desktop: React.FC = () => {
   const [isLocked, setIsLocked] = useState(false);
   const [isShuttingDown, setIsShuttingDown] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle('dark', !isDarkMode);
+  };
 
   const handleDownloadResume = () => {
     const link = document.createElement('a');
@@ -147,6 +156,21 @@ export const Desktop: React.FC = () => {
             label="Media Player"
             onDoubleClick={() => openWindow('musicplayer', 'Media Player', { width: 320, height: 380 })}
           />
+          <DesktopIcon
+            icon={<Trash2 size={28} className="text-gray-300 drop-shadow-lg" />}
+            label="Recycle Bin"
+            onDoubleClick={() => openWindow('recycle-bin', 'Recycle Bin', { width: 400, height: 350 })}
+          />
+          <DesktopIcon
+            icon={<Terminal size={28} className="text-green-400 drop-shadow-lg" />}
+            label="Command Prompt"
+            onDoubleClick={() => openWindow('cmd', 'Command Prompt', { width: 500, height: 350 })}
+          />
+          <DesktopIcon
+            icon={<Globe size={28} className="text-blue-400 drop-shadow-lg" />}
+            label="Internet Explorer"
+            onDoubleClick={() => openWindow('ie', 'Internet Explorer - Resume', { width: 600, height: 500 })}
+          />
         </div>
 
         {/* Context Menu */}
@@ -171,6 +195,9 @@ export const Desktop: React.FC = () => {
         {windows.find(w => w.id === 'youtube') && <YouTubeWindow />}
         {windows.find(w => w.id === 'explorer') && <FileExplorerWindow />}
         {windows.find(w => w.id === 'musicplayer') && <MusicPlayerWindow />}
+        {windows.find(w => w.id === 'recycle-bin') && <RecycleBinWindow />}
+        {windows.find(w => w.id === 'cmd') && <CommandPromptWindow />}
+        {windows.find(w => w.id === 'ie') && <InternetExplorerWindow />}
         {windows.find(w => w.id === 'minesweeper') && <MinesweeperGame />}
         {windows.find(w => w.id === 'tetris') && <TetrisGame />}
         {windows.find(w => w.id === 'solitaire') && <SolitaireGame />}
@@ -182,6 +209,8 @@ export const Desktop: React.FC = () => {
           onLock={() => setIsLocked(true)} 
           onShutdown={handleShutdown}
           onShowError={(msg) => setErrorMessage(msg)}
+          isDarkMode={isDarkMode}
+          onToggleDarkMode={toggleDarkMode}
         />
       </div>
     </>
