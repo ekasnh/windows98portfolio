@@ -13,7 +13,11 @@ import {
   Pencil,
   Image,
   Lock,
-  Power
+  Power,
+  Moon,
+  Sun,
+  Terminal,
+  Globe
 } from 'lucide-react';
 
 interface StartMenuProps {
@@ -21,9 +25,11 @@ interface StartMenuProps {
   onClose: () => void;
   onLock: () => void;
   onShutdown: () => void;
+  isDarkMode: boolean;
+  onToggleDarkMode: () => void;
 }
 
-export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose, onLock, onShutdown }) => {
+export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose, onLock, onShutdown, isDarkMode, onToggleDarkMode }) => {
   const { openWindow } = useWindows();
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
 
@@ -141,6 +147,27 @@ export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose, onLock, o
                   <span className="text-sm">🎵</span>
                   <span className="text-sm">Media Player</span>
                 </div>
+                <div 
+                  className="win95-start-item"
+                  onClick={() => handleOpenWindow('cmd', 'Command Prompt', { width: 500, height: 350 })}
+                >
+                  <Terminal size={16} />
+                  <span className="text-sm">Command Prompt</span>
+                </div>
+                <div 
+                  className="win95-start-item"
+                  onClick={() => handleOpenWindow('ie', 'Internet Explorer - Resume', { width: 600, height: 500 })}
+                >
+                  <Globe size={16} />
+                  <span className="text-sm">Internet Explorer</span>
+                </div>
+                <div 
+                  className="win95-start-item"
+                  onClick={() => handleOpenWindow('recycle-bin', 'Recycle Bin', { width: 400, height: 350 })}
+                >
+                  <span className="text-sm">🗑️</span>
+                  <span className="text-sm">Recycle Bin</span>
+                </div>
               </div>
             )}
           </div>
@@ -183,6 +210,16 @@ export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose, onLock, o
                 >
                   <Settings size={16} />
                   <span className="text-sm">Display</span>
+                </div>
+                <div 
+                  className="win95-start-item"
+                  onClick={() => {
+                    onToggleDarkMode();
+                    onClose();
+                  }}
+                >
+                  {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
+                  <span className="text-sm">{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
                 </div>
               </div>
             )}
